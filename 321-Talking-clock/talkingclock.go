@@ -1,5 +1,8 @@
 package main
 
+// To Do
+// [ ] use the .wav files to make a audio output file
+
 import (
 	"fmt"
 	"os"

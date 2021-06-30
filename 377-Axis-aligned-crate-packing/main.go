@@ -31,8 +31,7 @@ func fit1(args []string) int {
 	for _, v := range args {
 		val, err := strconv.Atoi(v)
 		if err != nil {
-			fmt.Println(err)
-			return -1
+			panic(err)
 		}
 		fitArray = append(fitArray, val)
 	}
@@ -41,5 +40,17 @@ func fit1(args []string) int {
 	maxY := fitArray[1] / fitArray[3]
 
 	return maxX * maxY
+}
 
+func fit2(args []string) int {
+	var fitArray []int
+	// loop to append a slice of fitArray values with the rotated boxes
+	fitArray = append(fitArray, fit1(args))
+	max := 0
+	for _, v := range fitArray {
+		if v > max {
+			v = max
+		}
+	}
+	return max
 }

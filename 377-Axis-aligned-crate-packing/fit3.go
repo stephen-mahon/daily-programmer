@@ -1,9 +1,8 @@
 package main
 
 // To do
-// [X] fit2
-// [x] fit3
-// [ ] fitn
+// [ ] fitN
+// [ ] add check for negative integer input
 
 import (
 	"fmt"
@@ -32,11 +31,13 @@ func main() {
 		} else {
 			args := stringToInt(args)
 			crate, box := crateAndBox3D(args)
-			fmt.Println("fit3:", fit3D(crate, box))
+			fmt.Println(fit3D(crate, box))
 		}
 	}
 }
 
+// takes in the input tags and converts to ints. Will panic exit with error if an input cannot be converted to int.
+// N.B. no check for negative numbers
 func stringToInt(args []string) []int {
 	var argInt []int
 	for _, v := range args {
@@ -49,6 +50,7 @@ func stringToInt(args []string) []int {
 	return argInt
 }
 
+// returns the max int in a slice of ints
 func maxVal(vals []int) int {
 	max := 0
 	for _, v := range vals {
@@ -59,6 +61,7 @@ func maxVal(vals []int) int {
 	return max
 }
 
+// rotates the cuboid by switching the other axes values
 func (box *cuboid) rotate(axis string) {
 	axis = strings.ToLower(axis)
 	var a, b int
@@ -82,6 +85,7 @@ func (box *cuboid) rotate(axis string) {
 	}
 }
 
+// creates a crate and box as a cuboid type from the arg input
 func crateAndBox3D(args []int) (cuboid, cuboid) {
 	crate := cuboid{args[0], args[1], args[2]}
 	box := cuboid{args[3], args[4], args[5]}
@@ -93,6 +97,7 @@ func (box cuboid) printVal() {
 	fmt.Printf("(%d,%d,%d)\n", box.x, box.y, box.z)
 }
 
+// basic fit function. Only works with int due to the floating point round off.
 func fit(crate, box cuboid) int {
 	maxX := crate.x / box.x
 	maxY := crate.y / box.y
@@ -100,8 +105,10 @@ func fit(crate, box cuboid) int {
 	return maxX * maxY * maxZ
 }
 
+// looks at all the orientations of the box in the crate and returns the max number.
 func fit3D(crate, box cuboid) int {
 	var fitArray []int
+	// This slice cycles through the six different possible orientations of the boxes
 	axes := []string{"x", "y", "z", "x", "y", "z"}
 	for _, v := range axes {
 		box.rotate(v)

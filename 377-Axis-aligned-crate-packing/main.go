@@ -15,6 +15,10 @@ type rectangle struct {
 	x, y int
 }
 
+type axes struct{
+	x,y,z int
+}
+
 type cuboid struct {
 	x, y, z int
 }
@@ -66,7 +70,7 @@ func rotateBox(box rectangle) rectangle {
 	return box
 }
 
-func rotateCuboid(box cuboid, index string) cuboid {
+func rotateCuboid(box cuboid, index string, dir int) cuboid {
 	return box
 }
 
@@ -87,4 +91,11 @@ func fit2(crate, box rectangle) int {
 	fitArray = append(fitArray, fit1(crate, box))
 	fitArray = append(fitArray, fit1(crate, rotateBox(box)))
 	return maxVal(fitArray)
+}
+
+func fit3(crate, box cuboid) int {
+	var fitArray []int
+
+	return maxVal(fitArray)
+
 }

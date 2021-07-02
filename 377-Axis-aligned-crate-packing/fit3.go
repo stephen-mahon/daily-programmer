@@ -23,16 +23,16 @@ type cuboid struct {
 func main() {
 	args := os.Args[1:]
 	if len(args) == 1 && args[0] == "/help" {
-		fmt.Println("Given the X, Y, and Z dimensions of the crate, and the x, y, and z dimensions of the boxes, returns the number of boxes that can fit into a single crate.")
-		fmt.Println("Usage: fit3 <X Y Z x y z>")
-		fmt.Println("Example: ./fit1 12 34 56 7 8 9")
+		fmt.Println("Given the X, Y, and Z dimensions of a crate, and the x, y, and z dimensions of a box, returns the max number of boxes that can fit into a single crate.")
+		fmt.Println("Usage: ./fit3 <X Y Z x y z>")
+		fmt.Println("Example: ./fit3 12 34 56 7 8 9")
 	} else {
 		if len(args) != 6 {
 			fmt.Println("You must enter six arguments! Type /help for help.")
 		} else {
 			args := stringToInt(args)
 			crate, box := crateAndBox3D(args)
-			fmt.Println("fit3:", fit3(crate, box))
+			fmt.Println("fit3:", fit3D(crate, box))
 		}
 	}
 }
@@ -59,20 +59,12 @@ func maxVal(vals []int) int {
 	return max
 }
 
-func checkAxes(axes []string, check string) bool {
-	for _, v := range axes {
-		if v == check {
-			return true
-		}
-	}
-	return false
-}
-
 func (box *cuboid) rotate(axis string) {
 	axis = strings.ToLower(axis)
 	var a, b int
 	switch axis {
 	case "x":
+		// There is clever way to solve this using pointers and addresses but vars a and b do the job for now.
 		a = box.y
 		b = box.z
 		box.y = b
@@ -96,6 +88,7 @@ func crateAndBox3D(args []int) (cuboid, cuboid) {
 	return crate, box
 }
 
+// for debugging the rotate method
 func (box cuboid) printVal() {
 	fmt.Printf("(%d,%d,%d)\n", box.x, box.y, box.z)
 }
@@ -107,7 +100,7 @@ func fit(crate, box cuboid) int {
 	return maxX * maxY * maxZ
 }
 
-func fit3(crate, box cuboid) int {
+func fit3D(crate, box cuboid) int {
 	var fitArray []int
 	axes := []string{"x", "y", "z", "x", "y", "z"}
 	for _, v := range axes {
@@ -115,5 +108,4 @@ func fit3(crate, box cuboid) int {
 		fitArray = append(fitArray, fit(crate, box))
 	}
 	return maxVal(fitArray)
-
 }

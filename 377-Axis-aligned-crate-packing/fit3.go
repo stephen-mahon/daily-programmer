@@ -2,7 +2,7 @@ package main
 
 // To do
 // [X] fit2
-// [ ] fit3
+// [x] fit3
 // [ ] fitn
 
 import (
@@ -68,21 +68,25 @@ func checkAxes(axes []string, check string) bool {
 	return false
 }
 
-func rotateBox(box cuboid, axes string) cuboid {
-	axes = strings.ToLower(axes)
-	switch axes {
+func (box *cuboid) rotate(axis string) {
+	axis = strings.ToLower(axis)
+	var a, b int
+	switch axis {
 	case "x":
-		box.y = box.z
-		box.z = box.y
-		return box
+		a = box.y
+		b = box.z
+		box.y = b
+		box.z = a
 	case "y":
-		box.x = box.z
-		box.z = box.x
-		return box
+		a = box.x
+		b = box.z
+		box.x = b
+		box.z = a
 	default:
-		box.x = box.y
-		box.y = box.x
-		return box
+		a = box.x
+		b = box.y
+		box.x = b
+		box.y = a
 	}
 }
 
@@ -92,7 +96,7 @@ func crateAndBox3D(args []int) (cuboid, cuboid) {
 	return crate, box
 }
 
-func printVal(box cuboid) {
+func (box cuboid) printVal() {
 	fmt.Printf("(%d,%d,%d)\n", box.x, box.y, box.z)
 }
 
@@ -105,23 +109,11 @@ func fit(crate, box cuboid) int {
 
 func fit3(crate, box cuboid) int {
 	var fitArray []int
-	fmt.Println("Initial")
-	printVal(box)
-	fitArray = append(fitArray, fit(crate, box))
-	box = rotateBox(box, "x")
-	fmt.Println("Rotate x")
-	printVal(box)
-	fitArray = append(fitArray, fit(crate, box))
-	box = rotateBox(box, "y")
-	fmt.Println("Rotate y")
-	printVal(box)
-	fitArray = append(fitArray, fit(crate, box))
-	box = rotateBox(box, "z")
-	fmt.Println("Rotate z")
-	printVal(box)
-
-	fitArray = append(fitArray, fit(crate, box))
-
+	axes := []string{"x", "y", "z", "x", "y", "z"}
+	for _, v := range axes {
+		box.rotate(v)
+		fitArray = append(fitArray, fit(crate, box))
+	}
 	return maxVal(fitArray)
 
 }

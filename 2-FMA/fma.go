@@ -22,4 +22,6 @@ func main() {
 	mass := 72 // kg
 	weight := forceEq(float32(mass), grav)
 	fmt.Println(weight, "N")
+	fmt.Println(massEq(weight, grav), "kg")
+	fmt.Println(accEq(weight, float32(mass)), "m s^-2")
 }

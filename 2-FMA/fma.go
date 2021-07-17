@@ -4,10 +4,22 @@ import (
 	"fmt"
 )
 
-func main() {
-	fmt.Printf(helloWorld())
+const grav float32 = 9.81 // m s^-2
+
+func forceEq(mass, acc float32) float32 {
+	return mass * acc
 }
 
-func helloWorld() string {
-	return fmt.Sprintf("Hello World!\n")
+func massEq(force, acc float32) float32 {
+	return force / acc
+}
+
+func accEq(force, mass float32) float32 {
+	return force / mass
+}
+
+func main() {
+	mass := 72 // kg
+	weight := forceEq(float32(mass), grav)
+	fmt.Println(weight, "N")
 }

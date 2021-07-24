@@ -55,11 +55,51 @@ func bonus() {
 		panic(err)
 	}
 	defer file.Close()
-	scanner := bufio.NewScanner(file)
 
+	var oddLetterSum int
+	var letterSums []int
+	scanner := bufio.NewScanner(file)
+	fmt.Printf("\nLetter Value Sum\n** Bonus Challenge **\n")
+
+	fmt.Printf("\n1. Find the only word with a letter sum of 319\n")
 	for scanner.Scan() {
+		letterSums = append(letterSums, letterSum(scanner.Text()))
 		if letterSum(scanner.Text()) >= 319 {
 			fmt.Println(string(scanner.Text()))
+		} else if letterSum(scanner.Text())%2 != 0 {
+			oddLetterSum++
 		}
 	}
+	fmt.Printf("\n2. Number of words with an odd letter sum\n%v\n", oddLetterSum)
+
+	mostCommonLetterSums := countDuplicates(letterSums)
+	count, maxLetterSum := mostCommonDuplicate(mostCommonLetterSums)
+
+	fmt.Printf("\n3. What letter sum is most common, and how many words have it?\n%v, %v\n", maxLetterSum, count)
+
+	//fmt.Printf("\n4. Find the pairs of words with the same letter sum whose lengths differ by 11 letters.\n")
+}
+
+func countDuplicates(listArray []int) map[int]int {
+	duplicateArray := make(map[int]int)
+	for _, i := range listArray {
+		_, val := duplicateArray[i]
+		if val {
+			duplicateArray[i]++
+		} else {
+			duplicateArray[i] = 1
+		}
+	}
+	return duplicateArray
+}
+
+func mostCommonDuplicate(listMap map[int]int) (int, int) {
+	var count, item int
+	for v, i := range listMap {
+		if i > count {
+			count = i
+			item = v
+		}
+	}
+	return item, count
 }

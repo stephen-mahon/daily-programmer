@@ -9,11 +9,11 @@ import (
 
 func main() {
 	args := os.Args[1:]
-	if len(args) == 1 && args[0] == "/help" {
-		fmt.Println("Baum-Sweet Sequence.")
+	if len(args) == 1 && args[0] == "\\help" {
+		fmt.Printf("Baum-Sweet Sequence.\nhttps://en.wikipedia.org/wiki/Baum-Sweet_sequence\n")
 	} else {
 		if len(args) != 1 {
-			fmt.Println("You must enter one argument! Type /help for help.")
+			fmt.Printf("You must enter one argument! Type \"/help\" for help.\n")
 		} else {
 			sequence(args[0])
 		}

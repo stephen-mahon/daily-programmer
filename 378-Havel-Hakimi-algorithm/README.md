@@ -77,7 +77,7 @@ hh([3, 2, 1]) => false
 hh([1, 1]) => true
 hh([1]) => false
 hh([]) => true
-``
+```
 
 ## Detailed example
 Here's the first pass through the algorithm using the original example:

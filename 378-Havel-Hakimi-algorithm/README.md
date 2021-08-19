@@ -64,7 +64,7 @@ Perform the Havel-Hakimi algorithm on a given sequence of answers. This algorith
 7. Continue from step 1 using the sequence from the previous step.
 Eventually you'll either return true in step 2, or false in step 5.
 You don't have to follow these steps exactly: as long as you return the right answer, that's fine. Also, if you answered the warmup questions, you may use your warmup solutions to build your challenge solution, but you don't have to.
-``
+```
 hh([5, 3, 0, 2, 6, 2, 0, 7, 2, 5]) => false
 hh([4, 2, 0, 1, 5, 0]) => false
 hh([3, 1, 2, 3, 1, 0]) => true

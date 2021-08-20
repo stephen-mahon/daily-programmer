@@ -11,7 +11,8 @@ func main() {
 	if len(args) == 1 && args[0] == "-help" {
 		fmt.Println("Major scales.")
 		fmt.Println("This programs takes the name of a major scale and the solfège name of a note, and returns the corresponding note in that scale.")
-		fmt.Println("In the movable do solfège system, these are referred to by the names Do, Re, Mi, Fa, So, La, and Ti, respectively.")
+		fmt.Println("The movable do solfège system are referred to by the names Do, Re, Mi, Fa, So, La, and Ti, respectively.")
+		fmt.Println("The 12 notes in the chromatic are: C  C#  D  D#  E  F  F#  G  G#  A  A#  B")
 		fmt.Println("Usage: ./note <string1, string2>")
 		fmt.Println("Example: ./note D Mi")
 		fmt.Println("Output: F#")

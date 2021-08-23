@@ -14,14 +14,17 @@ Display the remainder and quotient obtained.
 ## Challenge Input
 1:
 > 4x3 + 2x2 - 6x + 3
+
 > x - 3
 
 2:
 > 2x4 - 9x3 + 21x2 - 26x + 12
+
 > 2x - 3
 
 3:
 > 10x4 - 7x2 -1
+
 > x2 - x + 3
 
 ## Challenge Output

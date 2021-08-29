@@ -30,3 +30,17 @@ func sameNecklace(args []string) bool {
 	}
 	return false
 }
+
+func repeats(word string) int {
+	var num int
+	if word == "" {
+		return 1
+	}
+
+	for i := 0; i < len(word); i++ {
+		if word[i:]+word[:i] == word {
+			num++
+		}
+	}
+	return num
+}

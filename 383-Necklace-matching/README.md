@@ -41,4 +41,4 @@ repeats("") => 1
 
 # Optional Bonus 2
 
-There is exactly one set of four words in (the enable1 word list)[https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt] that all describe the same necklace. Find the four words.
+There is exactly one set of four words in [the enable1 word list](https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt) that all describe the same necklace. Find the four words.

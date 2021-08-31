@@ -13,6 +13,9 @@ func main() {
 	args := os.Args[1:]
 	if len(args) == 1 && args[0] == "-help" {
 		fmt.Println("Repeating numbers.")
+		fmt.Println("Usage: ./repeatingNumber <number>")
+		fmt.Println("Example: ./repeatingNumber 9870209870409898")
+		fmt.Println("Output: 098:2 870:2 987:2 9870:2 87:2 70:2 98:4 09:2")
 	} else {
 		if len(args) != 1 {
 			fmt.Println("You must enter one arguments! Type -help for help.")

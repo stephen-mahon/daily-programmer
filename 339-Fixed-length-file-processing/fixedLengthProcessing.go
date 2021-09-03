@@ -45,7 +45,6 @@ func highestSalary() {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
-
 	salList := make(map[string]int)
 	var name string
 	for scanner.Scan() {
@@ -59,14 +58,15 @@ func highestSalary() {
 			salList[name] = salary
 		}
 	}
-	var maxSal int
 
+	var maxSal int
 	for i := range salList {
 		if salList[i] > maxSal {
 			maxSal = salList[i]
 			name = i
 		}
 	}
+
 	fmt.Printf("%v $%v", name, moneyComma(maxSal))
 }
 
@@ -81,8 +81,8 @@ func moneyComma(amount int) string {
 		j++
 		money += string(t[i])
 	}
-	money = reverse(money)
-	return money
+
+	return reverse(money)
 }
 
 func reverse(s string) string {
@@ -90,5 +90,6 @@ func reverse(s string) string {
 	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
 		runes[i], runes[j] = runes[j], runes[i]
 	}
+
 	return string(runes)
 }

@@ -15,7 +15,10 @@ func main() {
 	if len(args) == 1 && args[0] == "-help" {
 		fmt.Println("Fixed-length file processing")
 	} else {
-		getLinktoFile("https://gist.githubusercontent.com/anonymous/747d5e3bbc57949d8bfe5fd82f359acb/raw/761277a2dcacafb3c06a1e6d0e405ca252098c09/Employee%2520Records.txt", "input.txt")
+		if _, err := os.Stat("input.txt"); os.IsNotExist(err) {
+			getLinktoFile("https://gist.githubusercontent.com/anonymous/747d5e3bbc57949d8bfe5fd82f359acb/raw/761277a2dcacafb3c06a1e6d0e405ca252098c09/Employee%2520Records.txt", "input.txt")
+
+		}
 		highestSalary()
 	}
 }

@@ -86,7 +86,7 @@ Marcelo Candela, $47,706
 ```
 
 ## Challenge input
-(input (raw text))[https://gist.githubusercontent.com/anonymous/747d5e3bbc57949d8bfe5fd82f359acb/raw/761277a2dcacafb3c06a1e6d0e405ca252098c09/Employee%2520Records.txt]
+[input (raw text)](https://gist.githubusercontent.com/anonymous/747d5e3bbc57949d8bfe5fd82f359acb/raw/761277a2dcacafb3c06a1e6d0e405ca252098c09/Employee%2520Records.txt)
 
 ## Challenge output
 ```

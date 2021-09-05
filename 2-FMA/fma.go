@@ -7,12 +7,11 @@ import (
 )
 
 func fSelect(function string, funcSelect []string) (string, bool) {
-	var ok bool
+	ok := false
 	for _, a := range funcSelect {
 		if a == function {
 			ok = true
-		} else {
-			ok = false
+			return function, ok
 		}
 	}
 	return function, ok
@@ -79,7 +78,7 @@ func main() {
 		if len(args) != 3 {
 			fmt.Println("You must enter three arguments! Type /help for help.")
 		} else {
-			physicsCalc(args, funcSelect)
+			fmt.Println(physicsCalc(args, funcSelect))
 		}
 	}
 }

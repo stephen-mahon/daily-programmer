@@ -6,8 +6,6 @@ import (
 	"strconv"
 )
 
-const grav float32 = 9.81 // m s^-2
-
 func fSelect(function string, funcSelect []string) (string, bool) {
 	var ok bool
 	for _, a := range funcSelect {
@@ -70,7 +68,6 @@ func main() {
 	funcSelect[0] = "force"
 	funcSelect[1] = "mass"
 	funcSelect[2] = "acceleration"
-	fmt.Println(funcSelect)
 
 	if len(args) == 1 && args[0] == "/help" {
 		fmt.Println("Force Calculator")

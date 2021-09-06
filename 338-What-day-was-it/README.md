@@ -23,7 +23,7 @@ Ignore previous rule if the year is divisible by 400
 ## Input Example
 The input will be 3 integers such as
 ```
-<YEAR> <MONTH> <DATE>
+<YEAR> <MONTH> <DAY>
 ```
 Limits for the 3 integers:
 ```

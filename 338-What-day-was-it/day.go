@@ -51,7 +51,7 @@ func day(args []string) string {
 			if val > 0 && val < 32 {
 				date = append(date, val)
 			} else {
-				fmt.Printf("Date must be between 0 and 32. Recieved %q\n", v)
+				fmt.Printf("Date must be between 0 and 32. Recieved %q \n", v)
 				log.Fatal()
 			}
 		}

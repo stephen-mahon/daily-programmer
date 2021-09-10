@@ -23,8 +23,12 @@ func main() {
 
 // Golden-section search
 /*
-	to find the minimum of f on [a, b]
+	to find the minimum or maximum of f on [a, b]
 	f: a strictly unimodal function on [a,b]
+	condition: minimize or maximize f
+	a: the left bound of the function
+	b: the right bound of the function
+	tol: the precision of the output
 */
 func gss(f func(float64) float64, condition string, a, b, tol float64) float64 {
 	c := b - (b-a)/gr

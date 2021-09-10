@@ -6,7 +6,11 @@ import (
 )
 
 var message = "Minimize and Maximize"
+
+// golden ratio for golden-section search algorithm
 var gr = (math.Sqrt(5) + 1) / 2
+
+// tolerence for golden-section search algorithm
 var tol = 1e-1
 
 func main() {

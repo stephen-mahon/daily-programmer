@@ -10,12 +10,14 @@ import (
 	"math/rand"
 	"os"
 	"strconv"
+	"time"
 )
 
 var message = "Cannibal numbers."
-var maxNum = 15
+var maxNum = 20
 
 func main() {
+	rand.Seed(time.Now().UnixNano())
 	args := os.Args[1:]
 	if len(args) == 1 && args[0] == "-help" {
 		fmt.Println(message)
@@ -27,6 +29,7 @@ func main() {
 			vals, queries := genArray(args)
 			fmt.Printf("%v, %v\n", vals, queries)
 			fmt.Println(cannibalNums(vals, queries))
+
 		}
 	}
 }
@@ -60,15 +63,17 @@ func cannibalNums(vals, queries []int) []int {
 	for i := range queries {
 		var cannibals, prey []int
 		for j := range vals {
-			if vals[j] > queries[i] {
+			if vals[j] >= queries[i] {
 				cannibals = append(cannibals, vals[j])
 			} else {
 				prey = append(prey, vals[j])
 			}
+
 		}
-		var max int
-		max, prey = maxAndArray(prey)
-		cannibals, _ = consume(cannibals, prey, queries[i], max)
+
+		for prey != nil {
+			cannibals, prey = consume(cannibals, prey, queries[i])
+		}
 
 		output = append(output, len(cannibals))
 	}
@@ -90,7 +95,8 @@ func maxAndArray(array []int) (int, []int) {
 }
 
 func removeSmallest(array []int) []int {
-	var min, index int
+	var index int
+	min := array[0]
 	for i, v := range array {
 		if v < min {
 			min = v
@@ -100,19 +106,21 @@ func removeSmallest(array []int) []int {
 	return append(array[:index], array[index+1:]...)
 }
 
-// This is clearly not working
-func consume(cannibals, prey []int, query, max int) ([]int, []int) {
-	if len(prey) == 0 {
-		return cannibals, nil
-	}
+func consume(cannibals, prey []int, query int) ([]int, []int) {
+	max, prey := maxAndArray(prey)
+
 	if max == query {
 		cannibals = append(cannibals, max)
 		_, prey = maxAndArray(prey)
 		return cannibals, prey
-	} else {
-		max++
-		prey = removeSmallest(prey)
-
 	}
-	return consume(cannibals, prey, query, max)
+
+	if len(prey) == 0 {
+		return cannibals, nil
+	}
+
+	max++
+	prey = removeSmallest(prey)
+
+	return consume(cannibals, append(prey, max), query)
 }

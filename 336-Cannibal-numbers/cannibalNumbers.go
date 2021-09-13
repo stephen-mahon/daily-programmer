@@ -14,6 +14,8 @@ import (
 )
 
 var message = "Cannibal numbers."
+var help = "See README.\nusage:\tcannibalNumbers <int> <int>\nexample:cannibalNumbers 7 2\n\t[21 9 5 8 10 1 3], [10 15]\n\t[4 2]"
+var err = "You must enter two arguments! Type -help for help."
 var maxNum = 20
 
 func main() {
@@ -21,15 +23,15 @@ func main() {
 	args := os.Args[1:]
 	if len(args) == 1 && args[0] == "-help" {
 		fmt.Println(message)
+		fmt.Printf(help)
 	} else {
 		if len(args) != 2 {
-			fmt.Println("You must enter two arguments! Type -help for help.")
+			fmt.Println(err)
 		} else {
 			args := input(args)
 			vals, queries := genArray(args)
 			fmt.Printf("%v, %v\n", vals, queries)
 			fmt.Println(cannibalNums(vals, queries))
-
 		}
 	}
 }
@@ -111,7 +113,6 @@ func consume(cannibals, prey []int, query int) ([]int, []int) {
 
 	if max == query {
 		cannibals = append(cannibals, max)
-		_, prey = maxAndArray(prey)
 		return cannibals, prey
 	}
 

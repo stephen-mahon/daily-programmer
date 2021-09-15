@@ -13,22 +13,19 @@ import (
 
 var message = "Consecutive Distance Rating"
 var help = "Load file name with -f. See README for more information."
-var err = "You must enter two arguments! Type -help for help."
+var err = "You must enter arguments! Type -help for help."
 
 func main() {
 	args := os.Args[1:]
-	if len(args) == 1 && args[0] == "-help" {
+	if len(args) == 0 {
+		fmt.Println(err)
+	} else if len(args) == 1 && args[0] == "-help" {
 		fmt.Println(message)
 		fmt.Printf(help)
 	} else if len(args) == 2 && args[0] == "-f" {
 		readfile(args[1])
 	} else {
-		if len(args) == 0 {
-			fmt.Println(err)
-		} else {
-			fmt.Println(consecDistance(args))
-		}
-
+		fmt.Println(consecDistance(args))
 	}
 }
 
@@ -56,10 +53,12 @@ func consecDistance(args []string) int {
 	for i := range vals {
 		elementMap[vals[i]] = i
 	}
+
 	keys := make([]int, 0)
 	for k := range elementMap {
 		keys = append(keys, k)
 	}
+
 	sort.Ints(keys)
 	var sum int
 	for i, k := range keys {
@@ -67,6 +66,7 @@ func consecDistance(args []string) int {
 			sum += int(math.Abs(float64(elementMap[k] - elementMap[k-1])))
 		}
 	}
+
 	return sum
 }
 

@@ -29,13 +29,14 @@ func main() {
 		fmt.Println(message)
 		fmt.Printf(help)
 	} else if len(args) == 2 && args[0] == "-f" {
-		readfile(args[1])
+		dat := readfile(args[1])
+		packetAssembler(dat)
 	} else {
 		fmt.Println(err)
 	}
 }
 
-func readfile(fileName string) {
+func readfile(fileName string) []string {
 	file, err := os.Open(fileName + ".txt")
 	if err != nil {
 		panic(err)
@@ -43,10 +44,20 @@ func readfile(fileName string) {
 	defer file.Close()
 
 	scanner := bufio.NewScanner(file)
+	var output []string
+
+	for scanner.Scan() {
+		output = append(output, scanner.Text())
+	}
+
+	return output
+}
+
+func packetAssembler(dat []string) {
 	var messageIDs, packetNum, packetLen []int
 	var someText []string
-	for scanner.Scan() {
-		ln := strings.Split(scanner.Text(), "\t")
+	for i := range dat {
+		ln := strings.Split(dat[i], "\t")
 		messageIDs = appendArray(ln[0], messageIDs)
 		packetNum = appendArray(ln[1], packetNum)
 		packetLen = appendArray(ln[2], packetLen)
@@ -64,9 +75,11 @@ func readfile(fileName string) {
 	}
 
 	sort.Ints(uniqueIDs)
+
 	for i := range uniqueIDs {
 		message := make(map[int]string)
 		var messageLen int
+
 		for j := range messageIDs {
 			if uniqueIDs[i] == messageIDs[j] {
 				message[packetNum[j]] = someText[j]
@@ -79,14 +92,13 @@ func readfile(fileName string) {
 
 		for k := range message {
 			messageKeys = append(messageKeys, k)
-
 		}
+
 		sort.Ints(messageKeys)
 
 		for j := range messageKeys {
 			fmt.Printf("%v\t%v\t%v\t%v\n", uniqueIDs[i], j, messageLen, message[j])
 		}
-
 	}
 }
 
@@ -95,6 +107,7 @@ func appendArray(text string, vals []int) []int {
 	if err != nil {
 		log.Fatal("error. expected an int but recieved:", text)
 	}
+
 	vals = append(vals, val)
 
 	return vals

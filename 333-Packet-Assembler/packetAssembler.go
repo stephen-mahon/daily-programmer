@@ -75,13 +75,15 @@ func readfile(fileName string) {
 
 		}
 
-		keys := make([]int, 0)
-		for k := range message {
-			keys = append(keys, k)
-		}
-		sort.Ints(keys)
+		messageKeys := make([]int, 0)
 
-		for j := range keys {
+		for k := range message {
+			messageKeys = append(messageKeys, k)
+
+		}
+		sort.Ints(messageKeys)
+
+		for j := range messageKeys {
 			fmt.Printf("%v\t%v\t%v\t%v\n", uniqueIDs[i], j, messageLen, message[j])
 		}
 

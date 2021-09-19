@@ -1,11 +1,5 @@
 package main
 
-/*
-	Some errors but the test-input works as expected.
-	Have an error thrown up with the challenge-input of an empty slice as part of the uniqueVals func.
-	Easy to fix
-*/
-
 import (
 	"bufio"
 	"errors"

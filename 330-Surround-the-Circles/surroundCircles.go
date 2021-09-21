@@ -91,6 +91,10 @@ func main() {
 	circles := findCircles(readfile("input"))
 	corners := findCorners(circles)
 	corners = checkBounds(corners, circles)
-	fmt.Println(corners)
+	corner1 := fmt.Sprintf("(%.3f, %.3f)", corners[0].x, corners[0].y)
+	corner2 := fmt.Sprintf("(%.3f, %.3f)", corners[0].x, corners[1].y)
+	corner3 := fmt.Sprintf("(%.3f, %.3f)", corners[1].x, corners[1].y)
+	corner4 := fmt.Sprintf("(%.3f, %.3f)", corners[1].x, corners[0].y)
+	fmt.Println(corner1, corner2, corner3, corner4)
 
 }

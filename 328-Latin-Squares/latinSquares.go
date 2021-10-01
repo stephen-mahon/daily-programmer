@@ -3,8 +3,6 @@ package main
 import (
 	"flag"
 	"fmt"
-	"log"
-	"strconv"
 	"strings"
 )
 
@@ -18,30 +16,31 @@ type grid struct {
 func main() {
 	fmt.Println(title)
 	length := flag.Int("length", 0, "the length, n, of the array.")
-	arrayCheck := flag.String("array", "", "the array matrix in the form n x n where n is the length of the array.")
+	array := flag.String("array", "", "the array matrix in the form n x n where n is the length of the array.")
 	flag.Parse()
 
-	arrayPrint(length, arrayCheck)
+	square := arrayPrint(length, array)
+	for _, v := range square {
+		fmt.Println(v)
+	}
 }
 
-func arrayPrint(length *int, vals *string) {
+func arrayPrint(length *int, vals *string) [][]string {
 	arrayStr := strings.Split(*vals, " ")
-	var array [][]int
-	i := 0
+	temp := make([]string, 0)
+	var array [][]string
+
 	for j := 0; j < len(arrayStr); j++ {
-		if j%*length == 0 && j != 0 {
-			fmt.Printf("\n")
-			i++
-
+		if (j%*length == 0) && (j != 0) {
+			array = append(array, temp)
+			temp = make([]string, 0)
 		}
-		val, err := strconv.Atoi(arrayStr[j])
-		if err != nil {
-			log.Fatal("expecting an int but recieved: ", arrayStr[i])
-		}
-		fmt.Printf("%v ", val)
-		array[j] = append(array[j], val)
+		temp = append(temp, arrayStr[j])
 	}
+	array = append(array, temp)
+	return array
+}
 
-	fmt.Printf("\n%v, %v\n", array, i)
-
+func getVal(array [][]string, x, y int) string {
+	return array[x][y]
 }

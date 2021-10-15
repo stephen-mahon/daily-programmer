@@ -11,6 +11,8 @@ import (
 
 var title = "Color maze"
 
+// make node struct
+
 func main() {
 
 	filename := flag.String("f", "input", "the input text.")
@@ -20,28 +22,20 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	key, maze := keyandMaze(file)
-
-	for _, line := range maze {
+	key, image := keyandMaze(file)
+	fmt.Printf("%v\n", key)
+	for _, line := range image {
 		for _, v := range line {
 			fmt.Println(v)
 		}
 	}
-
-	fmt.Printf("\n%v\n", key)
+	fmt.Printf("\n")
+	maze := createMaze(image, key)
 	for _, v := range maze {
-		for i := range v {
-			line := v[i]
-			for j := range line {
-				if strings.ContainsAny(key, string(line[j])) {
-					fmt.Printf("%v", string(line[j]))
-				} else {
-					fmt.Print(" ")
-				}
-			}
-		}
-		fmt.Println()
+		fmt.Println(v)
 	}
+	fmt.Printf("\nOne Pass\n")
+	onePass(maze)
 
 }
 
@@ -67,4 +61,61 @@ func readfile(filename string) ([][]string, error) {
 func keyandMaze(input [][]string) (string, [][]string) {
 
 	return strings.ReplaceAll(input[0][0], " ", ""), input[1:]
+}
+
+func createMaze(input [][]string, key string) []string {
+	var maze []string
+	for _, v := range input {
+		tmp := ""
+		for i := range v {
+			line := v[i]
+			for j := range line {
+				if strings.ContainsAny(key, string(line[j])) {
+					tmp += " "
+
+				} else if line[j] != 32 {
+					tmp += "1"
+				}
+			}
+		}
+		maze = append(maze, tmp)
+	}
+
+	return maze
+}
+
+func onePass(maze []string) []string {
+	for i := range maze {
+		for j := range maze[i] {
+			// Enter maze on 0th i-index
+			if i != 0 {
+				if j != 0 && (maze[i][j-1] == '1' && maze[i-1][j] == '1') {
+					fmt.Printf("0")
+				} else if (j != len(maze[i])-1 && maze[i][j] != '1') && (maze[i][j+1] == '1' && maze[i-1][j] == '1') {
+					fmt.Printf("0")
+				} else {
+					fmt.Printf("%v", string(maze[i][j]))
+				}
+
+				if j == len(maze[i])-1 {
+					fmt.Printf("\n")
+				}
+
+			} else {
+
+				if maze[i][j] == 32 {
+					fmt.Printf("0")
+				} else {
+					fmt.Printf("%v", string(maze[i][j]))
+				}
+				if j == len(maze[i])-1 {
+					fmt.Printf("\n")
+				}
+			}
+		}
+
+		//fmt.Printf("\n")
+
+	}
+	return []string{}
 }

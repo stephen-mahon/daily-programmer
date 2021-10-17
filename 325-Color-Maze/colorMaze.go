@@ -11,6 +11,8 @@ import (
 
 var title = "Color maze"
 
+// watch this https://www.youtube.com/watch?v=rop0W4QDOUI
+
 // make node struct
 
 func main() {
@@ -35,7 +37,9 @@ func main() {
 		fmt.Println(v)
 	}
 	fmt.Printf("\nOne Pass\n")
-	onePass(maze)
+	vals := onePass(maze)
+
+	fmt.Printf("\n\n###\n%v\n", vals)
 
 }
 
@@ -85,31 +89,42 @@ func createMaze(input [][]string, key string) []string {
 }
 
 func onePass(maze []string) []string {
+	nodes := make([]string, len(maze))
+
 	for i := range maze {
 		for j := range maze[i] {
+			var tmp = ""
 			// Enter maze on 0th i-index
 			if i != 0 {
 				if j != 0 && (maze[i][j-1] == '1' && maze[i-1][j] == '1') {
 					fmt.Printf("0")
+					tmp += "0"
 				} else if (j != len(maze[i])-1 && maze[i][j] != '1') && (maze[i][j+1] == '1' && maze[i-1][j] == '1') {
 					fmt.Printf("0")
+					tmp += "0"
 				} else {
 					fmt.Printf("%v", string(maze[i][j]))
+					tmp += string(maze[i][j])
 				}
 
 				if j == len(maze[i])-1 {
 					fmt.Printf("\n")
+					nodes[i] = tmp
 				}
 
 			} else {
 
 				if maze[i][j] == 32 {
-					fmt.Printf("0")
+					fmt.Print("0")
+					tmp += "0"
 				} else {
 					fmt.Printf("%v", string(maze[i][j]))
+					tmp += string(maze[i][j])
 				}
+
 				if j == len(maze[i])-1 {
 					fmt.Printf("\n")
+					nodes[i] = tmp
 				}
 			}
 		}
@@ -117,5 +132,5 @@ func onePass(maze []string) []string {
 		//fmt.Printf("\n")
 
 	}
-	return []string{}
+	return nodes
 }

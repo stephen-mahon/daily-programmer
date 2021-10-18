@@ -27,7 +27,10 @@ func main() {
 	maze := createMaze(file)
 	printMaze(maze)
 	fmt.Println()
-	onePass(maze)
+	nodes := onePass(maze)
+	for _, v := range nodes {
+		fmt.Println(v)
+	}
 
 }
 
@@ -50,20 +53,20 @@ func readfile(filename string) ([][]string, error) {
 	return output, nil
 }
 
-func createMaze(input [][]string) [][]string {
-	var maze [][]string
+func createMaze(input [][]string) [][]bool {
+	var maze [][]bool
 
 	key := strings.ReplaceAll(input[0][0], " ", "")
 
 	for i := 1; i < len(input); i++ {
 		for j := range input[i] {
 			letters := strings.ReplaceAll(input[i][j], " ", "")
-			var line []string
+			var line []bool
 			for k := range letters {
 				if strings.ContainsAny(key, string(letters[k])) {
-					line = append(line, " ")
+					line = append(line, true)
 				} else {
-					line = append(line, "1")
+					line = append(line, false)
 				}
 
 			}
@@ -73,74 +76,43 @@ func createMaze(input [][]string) [][]string {
 	return maze
 }
 
-func onePass(maze [][]string) [][]string {
+func onePass(maze [][]bool) [][]int {
+	var nodes [][]int
+
 	for i := range maze {
+		line := []int{}
 		for j := range maze[i] {
 			if i != 0 {
-				fmt.Printf("%v ", maze[i][j])
-				if j == len(maze[i])-1 {
-					fmt.Printf("\n")
-				}
-
-			} else {
-				// Enter maze on 0th i-index
-				if maze[i][j] == " " {
-					fmt.Print("0 ")
+				if nodes[i-1][j] == 1 && maze[i][j] {
+					line = append(line, 1)
 				} else {
-					fmt.Printf("%v ", string(maze[i][j]))
+					line = append(line, 0)
 				}
-
-				if j == len(maze[i])-1 {
-					fmt.Printf("\n")
+			} else {
+				if maze[i][j] {
+					line = append(line, 1)
+				} else {
+					line = append(line, 0)
 				}
 			}
 		}
+		nodes = append(nodes, line)
 	}
-	return maze
+
+	return nodes
 }
 
-func printMaze(maze [][]string) {
+func printMaze(maze [][]bool) {
 	for i := range maze {
 		for j := range maze[i] {
-			fmt.Printf("%v ", maze[i][j])
+			if maze[i][j] == true {
+				fmt.Print("   ")
+			} else {
+				fmt.Print("|X|")
+			}
 			if j == len(maze[i])-1 {
 				fmt.Printf("\n")
 			}
 		}
 	}
 }
-
-/*
-func onePass(maze []string) []string {
-
-	for i := range maze {
-		for j := range maze[i] {
-
-			if i != 0 {
-				if j != 0 && (maze[i][j] != '1' && maze[i][j-1] == '1') {
-					fmt.Printf("0")
-				} else {
-					fmt.Printf("%v", string(maze[i][j]))
-				}
-
-				if j == len(maze[i])-1 {
-					fmt.Printf("\n")
-				}
-
-			} else {
-				// Enter maze on 0th i-index
-				if maze[i][j] == 32 {
-					fmt.Print("0")
-				} else {
-					fmt.Printf("%v", string(maze[i][j]))
-				}
-
-				if j == len(maze[i])-1 {
-					fmt.Printf("\n")
-				}
-			}
-		}
-	}
-	return maze
-}
-*/

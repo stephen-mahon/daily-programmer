@@ -68,7 +68,6 @@ func createMaze(input [][]string) [][]bool {
 				} else {
 					line = append(line, false)
 				}
-
 			}
 			maze = append(maze, line)
 		}
@@ -77,26 +76,20 @@ func createMaze(input [][]string) [][]bool {
 }
 
 func onePass(maze [][]bool) [][]int {
-	var nodes [][]int
+	nodes := make([][]int, len(maze))
 
-	for i := range maze {
-		line := []int{}
+	for i := range nodes {
+		nodes[i] = make([]int, len(maze))
+	}
+
+	for i := range maze{
 		for j := range maze[i] {
-			if i != 0 {
-				if nodes[i-1][j] == 1 && maze[i][j] {
-					line = append(line, 1)
-				} else {
-					line = append(line, 0)
-				}
+			if !maze[i][j]{
+				nodes[i][j] = 0
 			} else {
-				if maze[i][j] {
-					line = append(line, 1)
-				} else {
-					line = append(line, 0)
-				}
+				nodes[i][j] = 1
 			}
 		}
-		nodes = append(nodes, line)
 	}
 
 	return nodes

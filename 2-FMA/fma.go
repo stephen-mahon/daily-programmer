@@ -1,56 +1,84 @@
 package main
 
 import (
+	"errors"
+	"flag"
 	"fmt"
-	"os"
+	"log"
 	"strconv"
+	"strings"
 )
 
-func fSelect(function string, funcSelect []string) (string, bool) {
-	ok := false
-	for _, a := range funcSelect {
-		if a == function {
-			ok = true
-			return function, ok
-		}
+var funcList = []string{"force", "mass", "acceleration"}
+
+func main() {
+
+	input := flag.String("f", "force", "Find the force, acceleration, or mass.")
+	args := flag.String("args", "10 9.81", "input arguments")
+	flag.Parse()
+
+	function, err := fSelect(*input, funcList)
+	if err != nil {
+		log.Fatal(err)
 	}
-	return function, ok
+
+	vals, err := strToSlice(*args)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println(vals)
+	fmt.Println(physicsCalc(function, vals))
+
 }
 
-func physicsCalc(args, funcSelect []string) float32 {
-	function := args[0]
-	f, err := fSelect(function, funcSelect)
-	if err != true {
-		fmt.Printf("value %s in %s is not a valid function!\n", f, args)
-		panic(f)
+func strToSlice(args string) ([]string, error) {
+	slice := strings.Split(args, " ")
+
+	if len(slice) != 2 {
+		return []string{}, errors.New("You must enter two arguments.")
 	}
+
+	return strings.Split(args, " "), nil
+}
+
+func fSelect(function string, funcSelect []string) (string, error) {
+	for _, a := range funcSelect {
+		if a == function {
+			return function, nil
+		}
+	}
+	return "", errors.New("function not found.")
+}
+
+func physicsCalc(f string, args []string) float32 {
 	switch f {
-	case funcSelect[0]:
-		m, err := strconv.ParseFloat(args[1], 32)
+	case funcList[0]:
+		m, err := strconv.ParseFloat(args[0], 32)
 		if err != nil {
 			panic(err)
 		}
-		a, err := strconv.ParseFloat(args[2], 32)
+		a, err := strconv.ParseFloat(args[1], 32)
 		if err != nil {
 			panic(err)
 		}
 		return float32(m * a)
-	case funcSelect[1]:
-		f, err := strconv.ParseFloat(args[1], 32)
+	case funcList[1]:
+		f, err := strconv.ParseFloat(args[0], 32)
 		if err != nil {
 			panic(err)
 		}
-		a, err := strconv.ParseFloat(args[2], 32)
+		a, err := strconv.ParseFloat(args[1], 32)
 		if err != nil {
 			panic(err)
 		}
 		return float32(f / a)
-	case funcSelect[2]:
-		f, err := strconv.ParseFloat(args[1], 32)
+	case funcList[2]:
+		f, err := strconv.ParseFloat(args[0], 32)
 		if err != nil {
 			panic(err)
 		}
-		m, err := strconv.ParseFloat(args[2], 32)
+		m, err := strconv.ParseFloat(args[1], 32)
 		if err != nil {
 			panic(err)
 		}
@@ -58,27 +86,5 @@ func physicsCalc(args, funcSelect []string) float32 {
 	default:
 		fmt.Println("Enter a valid function. Use /help for more info.")
 		return -1
-	}
-}
-
-func main() {
-	args := os.Args[1:]
-	funcSelect := make([]string, 3)
-	funcSelect[0] = "force"
-	funcSelect[1] = "mass"
-	funcSelect[2] = "acceleration"
-
-	if len(args) == 1 && args[0] == "/help" {
-		fmt.Println("Force Calculator")
-		fmt.Println("Usage: fma force <mass> <acceleration>")
-		fmt.Println("Usage: fma mass <force> <acceleration>")
-		fmt.Println("Usage: fma acceleration <force> <mass>")
-		fmt.Println("Example: ./fma force 72 9.81")
-	} else {
-		if len(args) != 3 {
-			fmt.Println("You must enter three arguments! Type /help for help.")
-		} else {
-			fmt.Println(physicsCalc(args, funcSelect))
-		}
 	}
 }

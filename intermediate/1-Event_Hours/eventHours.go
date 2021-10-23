@@ -20,17 +20,12 @@ func main() {
 	morning.hour = 8
 	morning.desc = "Coffee"
 
-	var shower event
-	shower.hour = 7
-	shower.desc = "Shower"
-
 	var run event
 	run.hour = 6
 	run.desc = "5k run"
 
 	addEvent(morning)
 	addEvent(run)
-	addEvent(shower)
 
 	printEvents(events)
 }

@@ -1,9 +1,18 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"os"
 	"sort"
+	"strconv"
+	"strings"
 )
+
+/*
+	To Do
+		[ ] user input time check
+*/
 
 var title = "Events organizable by hour"
 
@@ -12,7 +21,7 @@ type event struct {
 	desc string
 }
 
-var events = []event{}
+var schedule = []event{}
 
 func main() {
 	fmt.Println(title)
@@ -24,23 +33,35 @@ func main() {
 	run.hour = 6
 	run.desc = "5k run"
 
-	morning.add()
-	run.add()
+	morning.Add()
+	run.Add()
 
-	print(events)
+	input()
+
+	print(schedule)
 
 }
 
-func (op *event) add() {
-	events = append(events, *op)
+func (op *event) Add() {
+	schedule = append(schedule, *op)
+}
+
+func input() {
+	reader := bufio.NewReader(os.Stdin)
+	fmt.Print("Description: ")
+	text, _ := reader.ReadString('\n')
+	fmt.Print("Time: ")
+	t, _ := reader.ReadString('\n')
+	t = strings.TrimSuffix(t, "\r\n")
+	time, _ := strconv.Atoi(t)
+	userEvent := event{time, text}
+	userEvent.Add()
 }
 
 func print(all []event) {
-
 	sort.Slice(all, func(i, j int) bool {
 		return all[i].hour < all[j].hour
 	})
-
 	fmt.Print("hour, event\n")
 	for _, v := range all {
 		fmt.Printf("%v, %v\n", v.hour, v.desc)

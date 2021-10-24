@@ -24,17 +24,18 @@ func main() {
 	run.hour = 6
 	run.desc = "5k run"
 
-	addEvent(morning)
-	addEvent(run)
+	morning.add()
+	run.add()
 
-	printEvents(events)
+	print(events)
+
 }
 
-func addEvent(item event) {
-	events = append(events, item)
+func (op *event) add() {
+	events = append(events, *op)
 }
 
-func printEvents(all []event) {
+func print(all []event) {
 
 	sort.Slice(all, func(i, j int) bool {
 		return all[i].hour < all[j].hour

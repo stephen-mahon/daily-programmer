@@ -40,8 +40,6 @@ func main() {
 	fmt.Println(title)
 	text := ciphertext(title)
 	fmt.Println(text)
-	text = ciphertext(text)
-	fmt.Println(text)
 }
 
 func ciphertext(plaintext string) string {

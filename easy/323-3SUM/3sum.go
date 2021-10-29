@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"sort"
 )
 
 var title = "3SUM"
@@ -10,8 +9,23 @@ var inputExamples = []int{9, -6, -5, 9, 8, 3, -4, 8, 1, 7, -4, 9, -9, 1, 9, -9, 
 
 func main() {
 	fmt.Println(title)
-	sort.Ints(inputExamples)
-	for _, v := range inputExamples {
-		fmt.Println(v)
+	//sort.Ints(inputExamples)
+	combinations(inputExamples)
+}
+
+func combinations(vals []int) [][]int {
+
+	//var triples [][3]int
+
+	for i := range vals {
+		for j := range vals {
+			for k := range vals {
+				if vals[i]+vals[j]+vals[k] == 0 {
+					fmt.Println(vals[i], vals[j], vals[k])
+				}
+			}
+		}
 	}
+
+	return [][]int{}
 }

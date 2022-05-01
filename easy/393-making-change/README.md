@@ -6,9 +6,9 @@ For instance, if you want to give someone ¤468, you would give them four ¤100 
 
 Write a function to return the number of coins you use to make a given amount of change.
 
-'''
+```
 change(0) => 0
 change(12) => 3
 change(468) => 11
 change(123456) => 254
-'''
+```

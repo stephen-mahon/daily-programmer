@@ -1,22 +1,43 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math/big"
+)
+
+//big math
 
 func main() {
-	pi := leibnizFormula(10000)
-	fmt.Println(pi)
-}
+	// 200 bits of percision
+	const prec = 200
 
-func leibnizFormula(n int) float64 {
+	// initial value of pi set to zero
+	pi := new(big.Float).SetPrec(prec).SetInt64(0)
+
+	// Leibniz requires and alternating sign summation
 	sign := false
-	var pi float64
-	for i := 1; i <= n; i += 2 {
+
+	// initialize values for the compution. Liebniz gives pi/4, so four is needed
+	four := new(big.Float).SetPrec(prec).SetInt64(4)
+
+	// use t as a temporary value
+	t := new(big.Float)
+
+	// iterate 1 - 1/3 + 1/5 - 1/7 + ... = pi/4
+	for i := 1; i < 1000000; i += 2 {
 		sign = !sign
+		n := new(big.Float).SetPrec(prec).SetInt64(int64(i))
+		t.Quo(four, n)
 		if sign {
-			pi += 4 / float64(i)
+			pi.Add(pi, t)
 		} else {
-			pi -= 4 / float64(i)
+			pi.Sub(pi, t)
 		}
+
 	}
-	return pi
+
+	// Leibniz converges extremely slowly. Calculating pi to ten places requires about 5 billion terms.
+	fmt.Printf("pi = %.30f\n", pi)
+
+	// next step is convergence acceleration techniques.
 }

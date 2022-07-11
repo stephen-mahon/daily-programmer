@@ -3,11 +3,15 @@ package main
 import (
 	"flag"
 	"fmt"
+	"log"
 )
 
 func main() {
 	income := flag.Int("i", 0, "Gives the tax amount owed on a whole-number income amount up to ¤100,000,000.")
 	flag.Parse()
+	if *income > 100000000 {
+		log.Fatalln("can only calculate tax on income upto 100000000:", *income)
+	}
 	fmt.Printf("tax(%v) => %v\n", *income, tax(*income))
 }
 

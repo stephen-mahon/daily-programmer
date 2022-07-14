@@ -1,6 +1,6 @@
 # #374 Additive Persistence [easy]
 ## Description
-Inspired by this (tweet)[https://twitter.com/fermatslibrary/status/1089883307473543170], today's challenge is to calculate the additive persistence of a number, defined as how many loops you have to do summing its digits until you get a single digit number. Take an integer N:
+Inspired by this [tweet](https://twitter.com/fermatslibrary/status/1089883307473543170), today's challenge is to calculate the additive persistence of a number, defined as how many loops you have to do summing its digits until you get a single digit number. Take an integer N:
 
 1. Add its digits
 2. Repeat until the result has 1 digit

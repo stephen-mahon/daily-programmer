@@ -11,9 +11,9 @@ func main() {
 	flag.Parse()
 
 	var acc int
-	val := addDigits(*arg, &acc)
+	addDigits(*arg, &acc)
 
-	fmt.Println(*arg, "->", val)
+	fmt.Println(*arg, "->", acc)
 }
 
 func addDigits(num int, iter *int) int {

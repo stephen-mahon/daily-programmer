@@ -20,7 +20,8 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	fmt.Println(qcheck(args))
+	vals := qcheck(args)
+	printBoard(vals)
 
 }
 
@@ -43,4 +44,26 @@ func qcheck(qpos []int) []chessBoard {
 		pos2D = append(pos2D, chessBoard{x: i, y: v})
 	}
 	return pos2D
+}
+
+// to do: Transpose this table and reverse order
+func printBoard(pos []chessBoard) {
+	for i, v := range pos {
+		fmt.Print(string(97 + v.x))
+		for j := range pos {
+			if j == pos[i].y {
+				fmt.Print(" Q ")
+			} else {
+				fmt.Print(" . ")
+			}
+		}
+		fmt.Println()
+	}
+
+	// this is correct wrt to the "To do"
+	fmt.Print(" ")
+	for i := range pos {
+		fmt.Printf(" %s ", string(97+pos[i].x))
+	}
+	fmt.Println()
 }

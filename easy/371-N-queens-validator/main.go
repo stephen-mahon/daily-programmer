@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -20,9 +21,16 @@ func main() {
 	if err != nil {
 		log.Fatalln(err)
 	}
-	vals := qcheck(args)
+	vals := qPos(args)
 	printBoard(vals)
-
+	fmt.Print("qcheck({")
+	for i, v := range vals {
+		if i != len(vals)-1 {
+			fmt.Printf("%v,", v.y)
+		} else {
+			fmt.Printf("%v}) => %v\n", v.y, qcheck(vals))
+		}
+	}
 }
 
 func inputVerify(args *string) ([]int, error) {
@@ -38,7 +46,23 @@ func inputVerify(args *string) ([]int, error) {
 	return out, nil
 }
 
-func qcheck(qpos []int) []chessBoard {
+func qcheck(vals []chessBoard) bool {
+	for i := range vals {
+		for j := range vals {
+			if i != j && qLogic(vals[i], vals[j]) {
+				return false
+			}
+		}
+	}
+	return true
+}
+
+// if two queens are on the same diagonal they form a square.
+func qLogic(i, j chessBoard) bool {
+	return i.y == j.y || math.Abs(float64(i.x-j.x)) == math.Abs(float64(i.y-j.y))
+}
+
+func qPos(qpos []int) []chessBoard {
 	var pos2D []chessBoard
 	for i, v := range qpos {
 		pos2D = append(pos2D, chessBoard{x: i, y: v})

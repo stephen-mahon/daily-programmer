@@ -15,7 +15,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(rgb)
+	fmt.Printf("hexcolor(%v, %v, %v) => \"#%02x%02x%02x\"", rgb[0], rgb[1], rgb[2], rgb[0], rgb[1], rgb[2])
 }
 
 func parseNums(strInput *string) ([]int, error) {

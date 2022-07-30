@@ -18,5 +18,18 @@ func main() {
 }
 
 func funnel(words []string) bool {
+	input, test := words[0], words[1]
+	if len(test) != len(input)-1 {
+		return false
+	}
+	if test == input {
+		return true
+	}
+	for i := 1; i < len(input); i++ {
+		check := input[0:i-1] + input[i:]
+		if test == check {
+			return true
+		}
+	}
 	return false
 }

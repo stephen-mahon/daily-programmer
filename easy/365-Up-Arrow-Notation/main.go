@@ -12,3 +12,5 @@ func main() {
 	ups := strings.Count(*args, "↑")
 	fmt.Println(*args, ups)
 }
+
+//this is a stupidly complex problem

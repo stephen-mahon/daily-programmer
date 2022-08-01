@@ -17,7 +17,7 @@ var r1 = rand.New(s1)
 
 func main() {
 
-	arg := flag.String("d", "NdM", "dice roll in the format NdM")
+	arg := flag.String("d", "1d2", "dice roll in the format NdM")
 	flag.Parse()
 	numDie, sides, err := parseDieRoll(*arg)
 	if err != nil {
@@ -28,11 +28,13 @@ func main() {
 
 // is there something more elegant that this?
 func roller(numDie, sides int) {
+
 	reader := bufio.NewReader(os.Stdin)
-	quit, _ := reader.ReadString('\n')
+	var quit string
 	for quit != `q` {
 		rolls := diceThrowTotal(numDie, sides)
 		fmt.Println(rolls, sumSlice(rolls))
+		fmt.Print("\t\"q\" to exit\t")
 		quit, _ = reader.ReadString('\n')
 		quit = strings.Trim(quit, "\n")
 	}

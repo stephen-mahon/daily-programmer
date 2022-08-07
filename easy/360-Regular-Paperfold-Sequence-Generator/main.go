@@ -36,7 +36,7 @@ func middleComplemented(digits string) string {
 	if digits[middle] == '1' {
 		digits = digits[0:middle] + "0" + digits[middle+1:]
 	} else {
-		digits = digits[0:middle] + "1" + digits[middle:]
+		digits = digits[0:middle] + "1" + digits[middle+1:]
 	}
 	return digits
 }

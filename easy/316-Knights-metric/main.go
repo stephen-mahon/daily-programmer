@@ -13,7 +13,10 @@ type pos struct {
 func main() {
 	start := newPos(0, 0)
 	end := newPos(3, 7)
-	fmt.Println(dist(*start, *end))
+	x, y := dist(*start, *end)
+	if x == 0 && y == 0 {
+		fmt.Println(0)
+	}
 }
 
 func newPos(initX int, initY int) *pos {

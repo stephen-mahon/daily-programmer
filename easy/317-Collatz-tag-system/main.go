@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"os"
 	"strings"
 )
 
@@ -36,7 +37,7 @@ import (
 
 	to do:
 		[x] check input for correct alaphabet: an error is thrown if a letter isn't part of the map
-		[ ] output to text file would be neat.
+		[x] output to text file would be neat.
 */
 
 var production = map[byte]string{
@@ -46,13 +47,26 @@ var production = map[byte]string{
 }
 
 func main() {
+
 	init := flag.String("a", "aaa", "challenge input. production letters must contain a, b, and or c")
+	fileName := flag.String("f", "output.txt", "file to write")
 	flag.Parse()
-	err := checkLetters(*init)
+
+	f, err := os.Create(*fileName)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer f.Close()
+
+	err = checkLetters(*init)
 	if err != nil {
 		log.Fatalf("production letters must contain a, b, and or c: %v", err)
 	}
-	tagSystem(*init)
+	err = tagSystem(*init, f)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Printf("Complete. Wrote to file %q\n", *fileName)
 }
 
 func checkLetters(letters string) error {
@@ -65,10 +79,15 @@ func checkLetters(letters string) error {
 
 }
 
-func tagSystem(word string) {
-	fmt.Println(word)
+func tagSystem(word string, f *os.File) error {
+	dat := []byte(word + "\n")
+	_, err := f.Write(dat)
+	if err != nil {
+		return err
+	}
 	if len(word) >= 2 {
 		newWord := word[2:] + production[word[0]]
-		tagSystem(newWord)
+		tagSystem(newWord, f)
 	}
+	return nil
 }

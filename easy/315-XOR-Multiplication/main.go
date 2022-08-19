@@ -11,33 +11,40 @@ import (
 func main() {
 	input := flag.String("v", "1 2", "XOR-product")
 	flag.Parse()
-	vals, err := parseInt(*input)
+	vals, err := parseUint(*input)
 	if err != nil {
 		log.Fatalf("unexpected input! - %v", err)
 	}
 	if len(vals) != 2 {
 		log.Fatalf("too many arguments! - %v", *input)
 	}
-	fmt.Printf("%v@%v = %v\n", vals[0], vals[1], xorProduct(vals))
-
+	fmt.Printf("%v@%v = %v\n", vals[0], vals[1], xorProduct(vals[0], vals[1]))
 }
 
-func parseInt(args string) (vals []int, err error) {
+func parseUint(args string) (vals []uint, err error) {
 	input := strings.Split(args, " ")
 	for _, v := range input {
-		val, err := strconv.Atoi(v)
+		val, err := strconv.ParseUint(v, 10, 32)
 		if err != nil {
-			return []int{}, err
+			return []uint{}, err
 		}
-		vals = append(vals, val)
+		vals = append(vals, uint(val))
 	}
 	return vals, nil
 }
 
-func xorProduct(vals []int) int {
-	var bin []string
-	for _, v := range vals {
-		bin = append(bin, strconv.FormatInt(int64(v), 2))
+func xorProduct(a, b uint) uint {
+	var product uint
+	// bitshift operation
+	// xor truth table
+	// A B | XOR
+	// 0 0 |  0
+	// 0 1 |  1
+	// 1 0 |  1
+	// 1 1 |  0
+	// A(!B) + (!A)B
+	for ; b != 0; a, b = a<<1, b>>1 {
+		product ^= (a * (b & 1))
 	}
-	return -1
+	return product
 }

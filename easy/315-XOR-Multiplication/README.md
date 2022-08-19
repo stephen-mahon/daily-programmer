@@ -1,7 +1,7 @@
 # #315 [Easy] XOR Multiplication
 
 ## Description
-One way to think about butwise addition (using the symbol `^`) as binary addition without carrying the extra bit.
+One way to think about bitwise addition (using the symbol `^`) as binary addition without carrying the extra bit.
 
 ```
    101   5

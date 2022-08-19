@@ -35,5 +35,9 @@ func parseInt(args string) (vals []int, err error) {
 }
 
 func xorProduct(vals []int) int {
+	var bin []string
+	for _, v := range vals {
+		bin = append(bin, strconv.FormatInt(int64(v), 2))
+	}
 	return -1
 }

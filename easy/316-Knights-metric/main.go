@@ -5,26 +5,22 @@ import (
 	"math"
 )
 
-type pos struct {
+type Pos struct {
 	x int
 	y int
 }
 
 func main() {
-	start := newPos(0, 0)
-	end := newPos(3, 7)
-	x, y := dist(*start, *end)
-	if x == 0 && y == 0 {
-		fmt.Println(0)
-	}
+	v1 := newPos(3, 7)
+	fmt.Println(v1.mag())
+
 }
 
-func newPos(initX int, initY int) *pos {
-	position := pos{initX, initY}
+func newPos(initX int, initY int) *Pos {
+	position := Pos{initX, initY}
 	return &position
 }
 
-func dist(pos1 pos, pos2 pos) (int, int) {
-	return int(math.Abs(float64(pos1.x - pos2.x))),
-		int(math.Abs(float64(pos1.y - pos2.y)))
+func (pos Pos) mag() float64 {
+	return math.Sqrt(float64(pos.x*pos.x) + float64(pos.y*pos.y))
 }

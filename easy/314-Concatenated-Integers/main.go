@@ -3,19 +3,29 @@ package main
 import (
 	"flag"
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
 
-// To do
-//	[ ] concat loop
+var concatSlice []int
 
 func main() {
 	args := flag.String("a", "", "a list of integers")
 	flag.Parse()
 	vals := strings.Split(*args, " ")
 	heapsAlgorithm(vals, len(vals))
-
+	max := math.MinInt
+	min := math.MaxInt
+	for i := range concatSlice {
+		if concatSlice[i] > max {
+			max = concatSlice[i]
+		}
+		if concatSlice[i] < min {
+			min = concatSlice[i]
+		}
+	}
+	fmt.Println(min, max)
 }
 
 func heapsAlgorithm(s []string, l int) {
@@ -25,7 +35,8 @@ func heapsAlgorithm(s []string, l int) {
 			tmp += s[i]
 		}
 		val, _ := strconv.Atoi(tmp)
-		fmt.Println(val)
+		// This is not pretty
+		concatSlice = append(concatSlice, val)
 	}
 
 	for i := 0; i < l; i++ {

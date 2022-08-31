@@ -2,11 +2,16 @@ package main
 
 import (
 	"bufio"
+	"flag"
 	"fmt"
 	"io/ioutil"
 	"net/http"
 	"os"
+	"strings"
 )
+
+var webpage = "https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt"
+var enable = "enable1.txt"
 
 func letterSum(s string) int {
 	var total int
@@ -17,18 +22,13 @@ func letterSum(s string) int {
 }
 
 func main() {
-	args := os.Args[1:]
-	if len(args) == 1 && args[0] == "/help" {
-		fmt.Println("Letter value sum.")
-	} else if args[0] == "Bonus" {
-		getLinktoFile("https://raw.githubusercontent.com/dolph/dictionary/master/enable1.txt", "enable1.txt")
+	args := flag.String("o", "", "Letter value sum")
+	flag.Parse()
+	if strings.ToLower(*args) == "bonus" {
+		getLinktoFile(webpage, enable)
 		bonus()
 	} else {
-		if len(args) != 1 {
-			fmt.Println("You must enter one argument! Type /help for help.")
-		} else {
-			fmt.Println(letterSum(args[0]))
-		}
+		fmt.Println(letterSum(*args))
 	}
 }
 

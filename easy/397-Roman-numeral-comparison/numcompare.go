@@ -1,28 +1,21 @@
 package main
 
 import (
+	"flag"
 	"fmt"
-	"os"
+	"log"
 	"strings"
 )
 
 func main() {
-	args := os.Args[1:]
-	if len(args) == 1 && args[0] == "/help" {
-		fmt.Println("Roman Numeral Comparison. Given two roman numerals, return whether the first one is less than the second one.")
-		fmt.Println("Usage: numcompare <string> <string>")
-		fmt.Println("Example: ./numcompare MDCLXV MDCLXVI")
-	} else {
-		if len(args) != 2 {
-			fmt.Println("You must enter two arguments! Type /help for help.")
-		} else {
-			args[0] = strings.ToUpper(args[0])
-			args[1] = strings.ToUpper(args[1])
-			// fmt.Println(args[0], numeralToInt(args[0]))			// debug
-			// fmt.Println(args[1], numeralToInt(args[1]))			// debug
-			fmt.Println(numeralToInt(args[0]) < numeralToInt(args[1]))
-		}
+	input := flag.String("o", "", "Roman Numeral Comparison. Given two roman numerals, return whether the first one is less than the second one.")
+	flag.Parse()
+	args := strings.Split(*input, " ")
+	if len(args) != 2 {
+		log.Fatalf("arguments length is not equal to two: len(%q)=%v", args, len(args))
 	}
+	fmt.Printf("numcompare(%q, %q) => %v\n", args[0], args[1], numeralToInt(args[0]) < numeralToInt(args[1]))
+
 }
 
 // numeral To Int returns the integer val of a input roman numeral. The program panics when a value is not a roman numeral.
